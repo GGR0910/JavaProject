@@ -8,8 +8,6 @@ public class Moviment extends BaseEntity{
     private String Description;
     private Goal Goal;
     private Category Category;
-    private Account Account;
-    private Debt Debt;
     private Expense Expense;
     private Environment Environment;
 }

@@ -11,7 +11,7 @@ public class SystemUser extends BaseEntity{
     private Environment Environment;
     private Role Role;
 
-    public SystemUser(Long id, String name, String ResponsibleEmail, String ResponsibleName, String sector, String apiKey, String baseURL, Environment environment, Role role, SystemUser createdBy) {
+    public SystemUser(String name, String ResponsibleEmail, String ResponsibleName, String sector, String apiKey, String baseURL, Environment environment, Role role, SystemUser createdBy) {
         super(createdBy);
         this.Name = name;
         this.ResponsibleEmail = ResponsibleEmail;

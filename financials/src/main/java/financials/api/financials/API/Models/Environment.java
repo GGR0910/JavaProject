@@ -1,5 +1,7 @@
 package financials.api.financials.API.Models;
 
+import java.util.ArrayList;
+
 public class Environment extends BaseEntity {
     private String Name;
     private String Address;
@@ -7,6 +9,7 @@ public class Environment extends BaseEntity {
     private String ResponsibleEmail;
     private String ResponsibleName;
     private String Document;
+    private ArrayList<System> Systems;
 
     public Environment(String Name, String Address, String Country, String ResponsibleEmail, String ResponsibleName, String Document, SystemUser createdBy) {
         super(createdBy);

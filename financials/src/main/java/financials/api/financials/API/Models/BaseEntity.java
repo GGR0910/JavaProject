@@ -1,11 +1,10 @@
 package financials.api.financials.API.Models;
 
-import com.fasterxml.jackson.databind.JsonSerializable.Base;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class BaseEntity {
+    
     private String Id;
     private boolean IsActive;
     private SystemUser CreatedBy;
