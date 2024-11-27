@@ -13,7 +13,7 @@ import java.util.List;
 public class MovimentController {
     @Autowired
     private  IMovimentService MovimentService;
-     private ISystemUserService SystemUserService;
+    private ISystemUserService SystemUserService;
 
     public MovimentController(IMovimentService movimentService, ISystemUserService systemUserService) {
         MovimentService = movimentService;
@@ -21,13 +21,13 @@ public class MovimentController {
     }
 
     @GetMapping
-    public List<Moviment> getAllMoviments() {
-        return movimentService.getAllMoviments();
+    public List<Moviment> GetAllMoviments() {
+        return MovimentService.GetAllMovimentes();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Moviment> getMovimentById(@PathVariable Long id) {
-        Moviment moviment = movimentService.getMovimentById(id);
+    public ResponseEntity<Moviment> getMovimentById(@PathVariable  String id) {
+        Moviment moviment = MovimentService.GetMovimenteById(id);
         if (moviment != null) {
             return ResponseEntity.ok(moviment);
         } else {
@@ -37,12 +37,12 @@ public class MovimentController {
 
     @PostMapping
     public Moviment createMoviment(@RequestBody Moviment moviment) {
-        return movimentService.createMoviment(moviment);
+        return MovimentService.CreateMovimente(moviment);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Moviment> updateMoviment(@PathVariable Long id, @RequestBody Moviment movimentDetails) {
-        Moviment updatedMoviment = movimentService.updateMoviment(id, movimentDetails);
+    public ResponseEntity<Moviment> updateMoviment(@PathVariable  String id, @RequestBody Moviment movimentDetails) {
+        Moviment updatedMoviment = MovimentService.UpdateMovimente(id, movimentDetails);
         if (updatedMoviment != null) {
             return ResponseEntity.ok(updatedMoviment);
         } else {
@@ -51,12 +51,11 @@ public class MovimentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMoviment(@PathVariable Long id) {
-        if (movimentService.deleteMoviment(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteMoviment(@PathVariable  String id) {
+        MovimentService.DeleteMovimente(id);
+  
+        return ResponseEntity.ok().build();
+        
     }
 }
 

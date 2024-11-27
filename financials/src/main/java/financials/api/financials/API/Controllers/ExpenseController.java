@@ -16,12 +16,12 @@ public class ExpenseController {
 
     @GetMapping
     public List<Expense> getAllExpenses() {
-        return expenseService.getAllExpenses();
+        return ExpenseService.GetAllExpenses();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
-        Expense expense = expenseService.getExpenseById(id);
+    public ResponseEntity<Expense> getExpenseById(@PathVariable String id) {
+        Expense expense = ExpenseService.GetExpenseById(id);
         if (expense != null) {
             return ResponseEntity.ok(expense);
         } else {
@@ -31,12 +31,12 @@ public class ExpenseController {
 
     @PostMapping
     public Expense createExpense(@RequestBody Expense expense) {
-        return expenseService.createExpense(expense);
+        return ExpenseService.CreateExpense(expense);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody Expense expenseDetails) {
-        Expense updatedExpense = expenseService.updateExpense(id, expenseDetails);
+    public ResponseEntity<Expense> updateExpense(@PathVariable String id, @RequestBody Expense expenseDetails) {
+        Expense updatedExpense = ExpenseService.UpdateExpense(id, expenseDetails);
         if (updatedExpense != null) {
             return ResponseEntity.ok(updatedExpense);
         } else {
@@ -45,12 +45,10 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
-        boolean isDeleted = expenseService.deleteExpense(id);
-        if (isDeleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteExpense(@PathVariable String id) {
+        ExpenseService.DeleteExpense(id);
+       
+        return ResponseEntity.ok().build();
+        
     }
 }

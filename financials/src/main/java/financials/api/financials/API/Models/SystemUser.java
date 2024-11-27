@@ -1,6 +1,16 @@
 package financials.api.financials.API.Models;
 
-public class SystemUser extends BaseEntity{
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "SystemUser")
+public class SystemUser{
+    @Id
+    private String Id;
     private String Name;
     private String ResponsibleEmail;
     private String ResponsibleName;
@@ -8,19 +18,38 @@ public class SystemUser extends BaseEntity{
     private String APIKey;
     private String BaseURL;
 
-    private Environment Environment;
-    private Role Role;
 
-    public SystemUser(String name, String ResponsibleEmail, String ResponsibleName, String sector, String apiKey, String baseURL, Environment environment, Role role, SystemUser createdBy) {
-        super(createdBy);
+    private boolean IsActive;
+    private String CreatedById;
+    private String CreatedDate;
+    private String ModifiedById;
+    private String ModifiedDate;
+    private String EnvironmentId;
+
+    public SystemUser(String name, String ResponsibleEmail, String ResponsibleName, String sector, String baseURL,  String EnvironmentId, String CreatedById) {
+        this.CreatedById = CreatedById;
+        this.IsActive = true;
+        this.CreatedDate = java.time.LocalDateTime.now().toString();
+        this.Id = UUID.randomUUID().toString();
         this.Name = name;
         this.ResponsibleEmail = ResponsibleEmail;
         this.ResponsibleName = ResponsibleName;
         this.Sector = sector;
-        this.APIKey = apiKey;
         this.BaseURL = baseURL;
-        this.Environment = environment;
-        this.Role = role;
+        this.EnvironmentId = EnvironmentId;
+    }
+
+    public boolean Validate(String apiKey) {
+        return this.APIKey.equals(apiKey);
+    }
+
+    public String getEnvironmentId() {
+        return this.EnvironmentId;
+    }
+    
+    public void setAPIKey(String apiKey) {
+        this.APIKey = apiKey;
     }
 
 }
+

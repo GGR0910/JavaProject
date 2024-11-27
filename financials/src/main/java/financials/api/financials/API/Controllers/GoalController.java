@@ -15,12 +15,12 @@ public class GoalController {
 
     @GetMapping
     public List<Goal> getAllGoals() {
-        return goalService.getAllGoals();
+        return GoalService.GetAllGoals();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
-        Goal goal = goalService.getGoalById(id);
+    public ResponseEntity<Goal> getGoalById(@PathVariable String id) {
+        Goal goal = GoalService.GetGoalById(id);
         if (goal != null) {
             return ResponseEntity.ok(goal);
         } else {
@@ -30,12 +30,12 @@ public class GoalController {
 
     @PostMapping
     public Goal createGoal(@RequestBody Goal goal) {
-        return goalService.createGoal(goal);
+        return GoalService.CreateGoal(goal);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Goal> updateGoal(@PathVariable Long id, @RequestBody Goal goalDetails) {
-        Goal updatedGoal = goalService.updateGoal(id, goalDetails);
+    public ResponseEntity<Goal> updateGoal(@PathVariable String id, @RequestBody Goal goalDetails) {
+        Goal updatedGoal = GoalService.UpdateGoal(id, goalDetails);
         if (updatedGoal != null) {
             return ResponseEntity.ok(updatedGoal);
         } else {
@@ -44,12 +44,10 @@ public class GoalController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGoal(@PathVariable Long id) {
-        boolean isDeleted = goalService.deleteGoal(id);
-        if (isDeleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteGoal(@PathVariable String id) {
+        GoalService.DeleteGoal(id);
+       
+        return ResponseEntity.ok().build();
+        
     }
 }

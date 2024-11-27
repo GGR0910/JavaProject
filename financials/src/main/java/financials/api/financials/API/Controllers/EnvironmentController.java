@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import financials.api.financials.API.DTO.Environment.CreateSystemDTO;
 import financials.api.financials.API.DTO.Environment.DeleteSystemDTO;
+import financials.api.financials.API.DTO.Environment.UpdateSystemDTO;
 import financials.api.financials.API.Models.SystemUser;
 import financials.api.financials.API.Service.Interfaces.IEnvironmentService;
 import financials.api.financials.API.Service.Interfaces.ISystemUserService;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
@@ -55,7 +56,7 @@ public class EnvironmentController {
             return ResponseEntity.badRequest().body("Invalid API key");
         }
         else{
-            ArrayList <System> systems = EnvironmentService.GetSystems();
+            List <SystemUser> systems = EnvironmentService.GetSystems(user.getEnvironmentId());
             return ResponseEntity.ok("Systems");
         }
     }
@@ -67,7 +68,7 @@ public class EnvironmentController {
             return ResponseEntity.badRequest().body("Invalid API key");
         }
         else{
-            System system = EnvironmentService.GetSystem(SystemId);
+            SystemUser system = EnvironmentService.GetSystem(SystemId);
             return ResponseEntity.ok("System");
         }
     }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import financials.api.financials.API.Models.Category;
+import financials.api.financials.API.Models.SystemUser;
 import financials.api.financials.API.Service.Interfaces.ICategoryService;
 import financials.api.financials.API.Service.Interfaces.ISystemUserService;
 
@@ -24,19 +25,21 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories(@RequestHeader("apikey") String apiKey) {
-        if (!apiKeyValidator.validate(apiKey)) {
+        SystemUser user = SystemUserService.ValidateApiKey(apiKey);
+        if (!user.Validate(apiKey)) {
             return ResponseEntity.badRequest().body(null);
         }
-        List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = CategoryService.GetAllCategories();
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@RequestHeader("apikey") String apiKey, @PathVariable Long id) {
-        if (!apiKeyValidator.validate(apiKey)) {
+    public ResponseEntity<Category> getCategoryById(@RequestHeader("apikey") String apiKey, @PathVariable String id) {
+        SystemUser user = SystemUserService.ValidateApiKey(apiKey);
+        if (!user.Validate(apiKey)) {
             return ResponseEntity.badRequest().body(null);
         }
-        Category category = categoryService.getCategoryById(id);
+        Category category = CategoryService.GetCategoryById(id);
         if (category != null) {
             return ResponseEntity.ok(category);
         } else {
@@ -46,19 +49,21 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestHeader("apikey") String apiKey, @RequestBody Category category) {
-        if (!apiKeyValidator.validate(apiKey)) {
+        SystemUser user = SystemUserService.ValidateApiKey(apiKey);
+        if (!user.Validate(apiKey)) {
             return ResponseEntity.badRequest().body(null);
         }
-        Category createdCategory = categoryService.createCategory(category);
+        Category createdCategory = CategoryService.CreateCategory(category);
         return ResponseEntity.ok(createdCategory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@RequestHeader("apikey") String apiKey, @PathVariable Long id, @RequestBody Category categoryDetails) {
-        if (!apiKeyValidator.validate(apiKey)) {
+    public ResponseEntity<Category> updateCategory(@RequestHeader("apikey") String apiKey, @PathVariable String id, @RequestBody Category categoryDetails) {
+        SystemUser user = SystemUserService.ValidateApiKey(apiKey);
+        if (!user.Validate(apiKey)) {
             return ResponseEntity.badRequest().body(null);
         }
-        Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
+        Category updatedCategory = CategoryService.UpdateCategory(id, categoryDetails);
         if (updatedCategory != null) {
             return ResponseEntity.ok(updatedCategory);
         } else {
@@ -67,15 +72,14 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@RequestHeader("apikey") String apiKey, @PathVariable Long id) {
-        if (!apiKeyValidator.validate(apiKey)) {
+    public ResponseEntity<Void> deleteCategory(@RequestHeader("apikey") String apiKey, @PathVariable String id) {
+        SystemUser user = SystemUserService.ValidateApiKey(apiKey);
+        if (!user.Validate(apiKey)) {
             return ResponseEntity.badRequest().build();
         }
-        boolean isDeleted = categoryService.deleteCategory(id);
-        if (isDeleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        CategoryService.DeleteCategory(id);
+    
+            return ResponseEntity.ok().build();
         }
     }
-}
+
